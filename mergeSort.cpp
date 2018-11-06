@@ -3,10 +3,12 @@
 -------------------------------
 Fuad Al Abir
 November 1, 2018
-merge_sort.cpp
-program reads K random numbers from a file named "input.txt"
-and writes sorted numbers into a new file named "output_mergeSort.txt"
+mergeSort.cpp
+Objective:  This program reads K random numbers from a file named "input.txt"
+            and writes sorted numbers into a new file named "output_mergeSort.txt"
 Sorting algorithms: MERGE SORT
+Problem Source: Problem A, Cycle 1, CSE 2202: Sessional based on CSE 2201.
+Instructor: Biprodip Pal, Assistant Professor, RUET
 */
 /*
 Header: iostream
