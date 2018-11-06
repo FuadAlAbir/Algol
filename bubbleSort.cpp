@@ -3,10 +3,12 @@
 -------------------------------
 Fuad Al Abir
 October 31, 2018
-bubble_sort.cpp
-program reads K random numbers from a file named "input.txt"
-and writes sorted numbers into a new file named "output_bubbleSort.txt"
+bubbleSort.cpp
+Objective:  This program reads K random numbers from a file named "input.txt"
+            and writes sorted numbers into a new file named "output_bubbleSort.txt"
 Sorting algorithms: BUBBLE SORT
+Problem Source: Problem A, Cycle 1, CSE 2202: Sessional based on CSE 2201.
+Instructor: Biprodip Pal, Assistant Professor, RUET
 */
 /*
 Header: iostream
