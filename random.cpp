@@ -4,8 +4,11 @@
 Fuad Al Abir
 October 31, 2018
 random.cpp
-program creates a file name "input.txt"
-and writes N number of random values in it
+Objective:  This program creates a text file named "input.txt"
+            and writes N random number in range of -20000 to 20000 in it.
+Sorting algorithms: MERGE SORT
+Problem Source: Problem A, Cycle 1, CSE 2202: Sessional based on CSE 2201.
+Instructor: Biprodip Pal, Assistant Professor, RUET
 */
 /*
 Header: iostream
