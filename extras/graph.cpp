@@ -4,7 +4,7 @@
 Author: Fuad Al Abir
 Dated: November 7, 2018
 Name: graph.cpp
-Objective: This program creates Adjacency Matrix and Adjacency list from a - Directed and un-directed - graph. Pairwise connected nodes are the inputs.
+Objective: This program creates Adjacency Matrix and Adjacency list from a directed or undirected graph. Pairwise connected nodes are the inputs.
 Algorithms: Brute force
 Problem Source: https://www.geeksforgeeks.org/graph-and-its-representations/
 Instructor: None
