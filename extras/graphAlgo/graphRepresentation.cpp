@@ -48,7 +48,9 @@ int main()
     cin >> edge;
 
     int graph[edge][2];             // graph Matrix with #egde rows and two columns
-    int adjMat[node][node];         // adjMat Matrix with #node rows and #node columns
+    int *adjMat[node];         // adjMat Matrix with #node rows and #node columns
+    int i = node;
+    while(i--) adjMat[i] = new int[node];
     vector <int> adjList[node];
 
     // Initializing all the rows and cols of graph Matrix to 0
@@ -99,7 +101,6 @@ void addEdge(vector <int> adjList[], int u, int v)
 }
 
 // printing Adjacency Matrix
-
 
 void adjacencyMatrix(int ** adjMat, int node, int edge, int graph[][2])
 {
