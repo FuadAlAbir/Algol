@@ -1,22 +1,25 @@
 /*-----------------------------
     I N T R O D U C T I O N
 -------------------------------
-Author: Fuad Al Abir
-Dated: November 7, 2018
-Name: graph.cpp
-Objective: This program creates Adjacency Matrix and Adjacency list from a directed or undirected graph. Pairwise connected nodes are the inputs.
-Algorithms: Brute force
+Author:         Fuad Al Abir
+Dated:          November 7, 2018
+Name:           graph.cpp
+Objective:      This program creates Adjacency Matrix and Adjacency list from a directed or undirected graph. Pairwise connected nodes are the inputs.
+Algorithms:     Brute force
 Problem Source: https://www.geeksforgeeks.org/graph-and-its-representations/
-Instructor: None
+Instructor:     None
 */
 /*-----------------------------
     H E A D E R   F I L E S
 -------------------------------
 Header: iostream
 Reason: Input/Output stream - cin, cout
+Header: vector
+Reason: Using the data structure, vector to create Adjacency List
 */
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -25,8 +28,11 @@ using namespace std;
 ---------------------------------------------------
 Function:   void addEdge(vector <int> adjList[], int u, int v);
 Reason:     adding the edges to adjacency list
+Function:   void bfs(vector <int> adjList[], int s, int node, int visited[]);
+Reason:     for Beadth First Search
 */
 void addEdge(vector <int> adjList[], int u, int v);
+void bfs(vector <int> adjList[], int s, int node, int visited[]);
 
 int main()
 {
@@ -34,6 +40,7 @@ int main()
     int edge;                      // # of egdes of the graph
     int row;                       // variable row used in setting up adjoint matrix
     int col;                       // variable col used in setting up adjoint matrix
+
     cout << "# of node(s): ";
     cin >> node;
     cout << "# of edge(s): ";
@@ -42,6 +49,7 @@ int main()
     int graph[edge][2];             // graph Matrix with #egde rows and two columns
     int adjMat[node][node];         // adjMat Matrix with #node rows and #node columns
     vector <int> adjList[node];
+    int visited[node];
 
     // Initializing all the rows and cols of graph Matrix to 0
     for(int i = 0; i < edge; i++)
@@ -123,21 +131,60 @@ int main()
         cout << endl;
     }
     // printing Adjacency List
+    cout << "\nAdjacency list:" << endl;
     for (int i = 0; i < node; i++) 
     { 
-        cout << "\nAdjacency list of vertex: " << i << "\nhead";
+        cout << "Node: " << i;
         for (int j = 0; j < adjList[i].size(); j++)
         {
            cout << " -> " << adjList[i][j];
         } 
         cout << endl;
     }
+    bfs(adjList, 0, node, visited);
     return 0;
 }
 
+/*---------------------------------------------------------
+    A D D   E G D E   T O   A D J A C E N C Y   L I S T
+---------------------------------------------------------*/
 void addEdge(vector <int> adjList[], int u, int v)
 {
     adjList[u].push_back(v);
     /*** For Directed graph, one have just to eleminate or comment-out the following single line ***/
     adjList[v].push_back(u);
+}
+
+/*---------------------------------------------
+    B R E A D T H   F I R S T   S E A R C H
+---------------------------------------------*/
+void bfs(vector <int> adjList[], int start, int node, int visited[])
+{
+    for(int i = 0; i < node; i++)
+    {
+        visited[i] = 0;
+    }
+
+    queue <int> Q;
+    Q.push(start);
+    visited[start] = 1;
+
+    cout << "\nBreadth First Search: ";
+    while(!Q.empty())
+    {
+        int u = Q.front();
+        cout << u << " ";
+        Q.pop();
+
+        for(int i = 0; i < adjList[u].size(); i++)
+        {
+            if(visited[adjList[u][i]] == 0)
+            {
+                int v = adjList[u][i];
+                visited[v] = 1;
+                Q.push(v);
+            }
+        }
+    }
+    cout << endl;
 }
