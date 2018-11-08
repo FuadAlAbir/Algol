@@ -213,6 +213,7 @@ void dfs(vector <int> adjList[], int start, int node)
         visited[i] = 0;
         edgeID[i] = 0;
     }
+    
     cout << "Depth First Search: ";
     stack <int> s;
     s.push(start);
@@ -221,7 +222,7 @@ void dfs(vector <int> adjList[], int start, int node)
         int u = s.top();
         if(visited[u] == 0)
         {
-        cout << u << " ";
+            cout << u << " ";
         }
 
         visited[u] = 1;
