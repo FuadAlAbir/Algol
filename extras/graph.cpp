@@ -16,6 +16,8 @@ Header: iostream
 Reason: Input/Output stream - cin, cout
 Header: vector
 Reason: Using the data structure, vector to create Adjacency List
+Header: queue
+Reason: Using the data structure, queue in BFS
 */
 #include <iostream>
 #include <vector>
