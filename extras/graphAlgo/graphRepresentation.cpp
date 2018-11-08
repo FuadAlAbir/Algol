@@ -72,8 +72,9 @@ using namespace std;
 ---------------------------------------------------
 Function:   void addEdge(vector <int> adjList[], int u, int v);
 Reason:     adding the edges to adjacency list
-Parameters: vector <int> adjList[]: vector array reference in which all the edges will be added
-            int u, int v: {u, v} nodes that are connected by an edge
+Parameters: vector <int> adjList[] - vector array reference in which all the edges will be added
+            int u, int v - {u, v} nodes that are connected by an edge
+Return:     void
 
 Function:   void adjacencyMatrix(int ** adjMat, int graph[][2], int node, int edge);
 Reason:     Creating and Printing Adjacency Matrix
@@ -81,13 +82,16 @@ Parameter:  vector ** adjMat - double pointer reference from which Adjacency Mat
             int graph[][2] - a primitive 2D array where pairwise nodes were taken
             int node - # of nodes
             int edge - # of edge
+Return:     void
 
 Function:   void adjacencyList(vector <int> adjList[], int node, int edge, int graph[][2]);
 Reason:     Creating And Printing Adjacency List
 Parameter:  vector <int> adjList[]: vector array reference from which Adjacency List is printed, created from graph[][2]
-            int graph[][2]:         a primitive 2D array where pairwise nodes were taken
-            int node:               # of nodes
-            int edge:               # of edge
+            int graph[][2] - a primitive 2D array where pairwise nodes were taken
+            int node - # of nodes
+            int edge - # of edge
+Return:     void
+
 */
 void addEdge(vector <int> adjList[], int u, int v);
 void adjacencyMatrix(int ** adjMat, int graph[][2], int node, int edge);

@@ -3,11 +3,24 @@
 -------------------------------
 Author:         Fuad Al Abir
 Dated:          November 7, 2018
-Name:           graph.cpp
-Objective:      This program creates Adjacency Matrix and Adjacency list from a directed or undirected graph. Pairwise connected nodes are the inputs.
-Algorithms:     Brute force
-Problem Source: https://www.geeksforgeeks.org/graph-and-its-representations/
-Instructor:     None
+Name:           graphBfsDfs.cpp
+Objective:      Intro to graph travarsal
+Algorithms:     Breadth First Search - BFS, Depth First Search - DFS
+Problem Source: Programming Contest - Data structure and Algorithm
+Instructor:     Md. Mahbubul Hasan
+*/
+/*-------------------------------------------
+    S A M P L E   I N P U T - O U T P U T
+---------------------------------------------
+INPUT:
+# of node(s): 15
+# of edge(s): 14
+Enter the connected nodes, pairwise: 5 3 3 4 4 0 4 1 1 0 1 2 3 2 5 9 2 8 6 7 11 12 11 14 12 14 13 10
+Graph Traversal starting Node: 5
+
+OUTPUT:
+Breadth First Search: 5 3 9 4 2 0 1 8
+Depth First Search: 5 3 4 0 1 2 8 9
 */
 /*-----------------------------
     H E A D E R   F I L E S
@@ -33,15 +46,31 @@ using namespace std;
 ---------------------------------------------------
 Function:   void addEdge(vector <int> adjList[], int u, int v);
 Reason:     adding the edges to adjacency list
+Parameters: vector <int> adjList[]: vector array reference in which all the edges will be added
+            int u, int v: {u, v} nodes that are connected by an edge
+Return:     void
+
 Function:   void bfs(vector <int> adjList[], int s, int node);
-Reason:     for Beadth First Search
+Reason:     Breadth First Search Algorithm is implemented here
+Parameters: vector <int> adjList[] - vector array reference from which BFS is processed
+            int start - Starting node for BFS
+            int node - # of nodes
+Return:     void
+
 Function:   void dfs(vector <int> adjList[], int start, int node);
-Reason:     for Depth First Search
+Reason:     Depth First Search Algorithm is implemented here
+Parameters: vector <int> adjList[]: vector array reference from which DFS is processed
+            int start - Starting node for DFS
+            int node - # of nodes
+Return:     void
 */
 void addEdge(vector <int> adjList[], int u, int v);
-void bfs(vector <int> adjList[], int s, int node);
+void bfs(vector <int> adjList[], int start, int node);
 void dfs(vector <int> adjList[], int start, int node);
 
+/*-------------------------------
+    M A I N   F U N C T I O N
+-------------------------------*/
 int main()
 {
     int node;                      // # of nodes of the graph
@@ -142,7 +171,7 @@ void dfs(vector <int> adjList[], int start, int node)
         edgeID[i] = 0;
     }
     
-    cout << "\nDepth First Search: ";
+    cout << "Depth First Search: ";
     stack <int> s;
     s.push(start);
     while(!s.empty())

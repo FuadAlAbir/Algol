@@ -9,6 +9,24 @@ Algorithms:
 Problem Source: https://www.geeksforgeeks.org/graph-and-its-representations/
 Instructor:     None
 */
+/*-------------------------------------------
+    S A M P L E   I N P U T - O U T P U T
+---------------------------------------------
+INPUT:
+# of node(s): 15
+# of edge(s): 14
+Enter the connected nodes, pairwise: 5 3 3 4 4 0 4 1 1 0 1 2 3 2 5 9 2 8 6 7 11 12 11 14 12 14 13 10
+Graph Traversal starting Node: 5
+
+OUTPUT:
+Breadth First Search: 5 3 9 4 2 0 1 8
+Breadth First Search: 6 7
+Breadth First Search: 10 13
+Breadth First Search: 11 12 14
+
+Total Components: 4
+
+*/
 /*-----------------------------
     H E A D E R   F I L E S
 -------------------------------
@@ -31,16 +49,39 @@ using namespace std;
 ---------------------------------------------------
 Function:   void addEdge(vector <int> adjList[], int u, int v);
 Reason:     adding the edges to adjacency list
+Parameters: vector <int> adjList[]: vector array reference in which all the edges will be added
+            int u, int v: {u, v} nodes that are connected by an edge
+Return:     void
+
 Function:   vector <int> bfs(vector <int> adjList[], int start, int node);
-Reason:     for Beadth First Search
+Reason:     Breadth First Search Algorithm is implemented here
+Parameters: vector <int> adjList[] - vector array reference from which BFS is processed
+            int start - Starting node for BFS
+            int node - # of nodes
+Return:     vector <int> - <traversed nodes> <# of node traversed>
+
 Function:   vector <int> dfs(vector <int> adjList[], int start, int node);
-Reason:     for Depth First Search
+Reason:     Depth First Search Algorithm is implemented here
+Parameters: vector <int> adjList[]: vector array reference from which DFS is processed
+            int start - Starting node for DFS
+            int node - # of nodes
+Return:     vector <int> - <traversed nodes> <# of node traversed>
+
+Function:   int component(vector <int> adjList[], int start, int node);
+Reason:     To find the components
+Parameters: vector <int> adjList[]: vector array reference from which DFS is processed
+            int start - Starting node for BFS of DFS
+            int node - # of nodes
+Return:     int - # of components
 */
 void addEdge(vector <int> adjList[], int u, int v);
 vector <int> bfs(vector <int> adjList[], int start, int node);
 vector <int> dfs(vector <int> adjList[], int start, int node);
 int component(vector <int> adjList[], int start, int node);
 
+/*-------------------------------
+    M A I N   F U N C T I O N
+-------------------------------*/
 int main()
 {
     int node;                      // # of nodes of the graph
@@ -80,7 +121,7 @@ int main()
         addEdge(adjList, graph[i][0], graph[i][1]);
     }
     
-    cout << "\nGraph Traversal starting Node: ";
+    cout << "Graph Traversal starting Node: ";
     cin >> start;
     cout << endl;
     cout << "\nTotal Components: " << component(adjList, start, node) << endl;
@@ -135,7 +176,8 @@ vector <int> bfs(vector <int> adjList[], int start, int node)
     }
     cout << endl;
     returnVector.push_back(counter);
-    return returnVector;                            // returns vector: <traversed nodes> <# of node traversed>
+    // returns vector: <traversed nodes> <# of node traversed>
+    return returnVector;
 }
 
 /*-------------------------------------------
@@ -183,9 +225,13 @@ vector <int> dfs(vector <int> adjList[], int start, int node)
     }
     cout << endl;
     returnVector.push_back(counter);
-    return returnVector;                // returns vector: <traversed nodes> <# of node traversed>
+    // returns vector: <traversed nodes> <# of node traversed>
+    return returnVector;
 }
 
+/*-----------------------------------------
+    F I N D I N G   C O M P O N E N T S
+-----------------------------------------*/
 int component(vector <int> adjList[], int start, int node)
 {
     vector <int> visited;
