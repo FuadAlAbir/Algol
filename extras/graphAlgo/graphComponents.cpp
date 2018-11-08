@@ -3,9 +3,9 @@
 -------------------------------
 Author:         Fuad Al Abir
 Dated:          November 7, 2018
-Name:           graph.cpp
-Objective:      This program creates Adjacency Matrix and Adjacency list from a directed or undirected graph. Pairwise connected nodes are the inputs.
-Algorithms:     Brute force
+Name:           graphComponents.cpp
+Objective:      
+Algorithms:     
 Problem Source: https://www.geeksforgeeks.org/graph-and-its-representations/
 Instructor:     None
 */
@@ -31,21 +31,20 @@ using namespace std;
 ---------------------------------------------------
 Function:   void addEdge(vector <int> adjList[], int u, int v);
 Reason:     adding the edges to adjacency list
-Function:   void bfs(vector <int> adjList[], int s, int node);
+Function:   vector <int> bfs(vector <int> adjList[], int start, int node);
 Reason:     for Beadth First Search
-Function:   void dfs(vector <int> adjList[], int start, int node);
+Function:   vector <int> dfs(vector <int> adjList[], int start, int node);
 Reason:     for Depth First Search
 */
 void addEdge(vector <int> adjList[], int u, int v);
-void bfs(vector <int> adjList[], int s, int node);
-void dfs(vector <int> adjList[], int start, int node);
+vector <int> bfs(vector <int> adjList[], int start, int node);
+vector <int> dfs(vector <int> adjList[], int start, int node);
+int component(vector <int> adjList[], int start, int node);
 
 int main()
 {
     int node;                      // # of nodes of the graph
     int edge;                      // # of egdes of the graph
-    int row;                       // variable row used in setting up adjoint matrix
-    int col;                       // variable col used in setting up adjoint matrix
     int start;                     // variable start is the starting node of BFS
 
     cout << "# of node(s): ";
@@ -54,7 +53,6 @@ int main()
     cin >> edge;
 
     int graph[edge][2];             // graph Matrix with #egde rows and two columns
-    int adjMat[node][node];         // adjMat Matrix with #node rows and #node columns
     vector <int> adjList[node];
 
     // Initializing all the rows and cols of graph Matrix to 0
@@ -65,15 +63,7 @@ int main()
             graph[i][j] = 0;
         }
     }
-    // Initializing all the rows and cols of adjMat Matrix to 0
-    for(int i = 0; i < node; i++)
-    {
-        for(int j = 0; j < node; j++)
-        {
-            adjMat[i][j] = 0;
-        }
-    }
-    
+
     // Scanning connected nodes of the graph pairwise
     cout << "Enter the connected nodes, pairwise: ";
     for(int c = 0; c < edge; c++)
@@ -89,68 +79,11 @@ int main()
     {
         addEdge(adjList, graph[i][0], graph[i][1]);
     }
-
-    row = -1;
-    col = -1;
-
-    cout << "\nNodes with Edges: ";
     
-    for(int i = 0; i < edge; i++)
-    {
-        for(int j = 0; j < 2; j++)
-        {
-            // printing the connected nodes pairwise
-            if(i == 0 && j == 0)
-            {
-                cout << "{{" << graph[i][j] << ", ";
-            }
-            else if(j == 0)
-            {
-                cout << "{" << graph[i][j] << ", ";
-            }
-            else if(i != edge - 1)
-            {
-                cout << graph[i][j] << "}, ";
-            }
-            else
-            {
-                cout << graph[i][j] << "}}" << endl;
-            }
-            // detecting the rows and cols that are connected
-            if(j == 0) row = graph[i][j];
-            else col = graph[i][j];
-        }
-        // setting up adjoint matrix by the connections
-        adjMat[row][col] = 1;
-        /*** For Directed graph, one have just to eleminate or comment-out the following single line ***/
-        adjMat[col][row] = 1;
-    }
-
-    // printing Adjacency Matrix
-    cout << "\nAdjacency Matrix:" << endl;
-    for(int i = 0; i < node; i++)
-    {
-        for(int j = 0; j < node; j++)
-        {
-            cout << adjMat[i][j] << " ";
-        }
-        cout << endl;
-    }
-    // printing Adjacency List
-    cout << "\nAdjacency list:" << endl;
-    for (int i = 0; i < node; i++) 
-    { 
-        cout << "Node: " << i;
-        for (int j = 0; j < adjList[i].size(); j++)
-        {
-           cout << " -> " << adjList[i][j];
-        }
-        cout << endl;
-    }
     cout << "\nGraph Traversal starting Node: ";
     cin >> start;
-    bfs(adjList, start, node);
-    dfs(adjList, start, node);
+    cout << endl;
+    cout << "\nTotal Components: " << component(adjList, start, node) << endl;
     return 0;
 }
 
@@ -167,8 +100,10 @@ void addEdge(vector <int> adjList[], int u, int v)
 /*---------------------------------------------
     B R E A D T H   F I R S T   S E A R C H
 ---------------------------------------------*/
-void bfs(vector <int> adjList[], int start, int node)
+vector <int> bfs(vector <int> adjList[], int start, int node)
 {
+    vector <int> returnVector;
+    int counter = 0;                    // counts # of data searched
     int visited[node];
     for(int i = 0; i < node; i++)
     {
@@ -179,11 +114,13 @@ void bfs(vector <int> adjList[], int start, int node)
     Q.push(start);
     visited[start] = 1;
 
-    cout << "\nBreadth First Search: ";
+    cout << "Breadth First Search: ";
     while(!Q.empty())
     {
         int u = Q.front();
+        returnVector.push_back(u);
         cout << u << " ";
+        counter++;
         Q.pop();
 
         for(int i = 0; i < adjList[u].size(); i++)
@@ -197,13 +134,17 @@ void bfs(vector <int> adjList[], int start, int node)
         }
     }
     cout << endl;
+    returnVector.push_back(counter);
+    return returnVector;                            // returns vector: <traversed nodes> <# of node traversed>
 }
 
 /*-------------------------------------------
     D E A P T H   F I R S T   S E A R C H
 -------------------------------------------*/
-void dfs(vector <int> adjList[], int start, int node)
+vector <int> dfs(vector <int> adjList[], int start, int node)
 {
+    vector <int> returnVector;
+    int counter = 0;
     int visited[node];
     int edgeID[node];
     for(int i = 0; i < node; i++)
@@ -211,7 +152,7 @@ void dfs(vector <int> adjList[], int start, int node)
         visited[i] = 0;
         edgeID[i] = 0;
     }
-    
+
     cout << "Depth First Search: ";
     stack <int> s;
     s.push(start);
@@ -220,10 +161,12 @@ void dfs(vector <int> adjList[], int start, int node)
         int u = s.top();
         if(visited[u] == 0)
         {
+            returnVector.push_back(u);
             cout << u << " ";
         }
 
         visited[u] = 1;
+        counter++;
         s.pop();
         
         while(edgeID[u] < adjList[u].size())
@@ -239,4 +182,39 @@ void dfs(vector <int> adjList[], int start, int node)
         }
     }
     cout << endl;
+    returnVector.push_back(counter);
+    return returnVector;                // returns vector: <traversed nodes> <# of node traversed>
+}
+
+int component(vector <int> adjList[], int start, int node)
+{
+    vector <int> visited;
+    vector <int> temp;
+    int counterNode = 0;
+    int counterBFS = 0;
+
+    for(int j = 0; j < node; j++)
+    {
+        visited.push_back(0);
+    }
+    while(counterNode < node)
+    {
+        counterBFS++;
+        temp = bfs(adjList, start, node);
+        for(int j = 0; j < temp.size() - 1; j++)
+        {
+            counterNode++;
+            visited[temp[j]] = 1;
+        }
+
+        for(int j = 0; j < visited.size(); j++)
+        {
+            if(visited[j] == 0)
+            {   
+                start = j;
+                break;
+            }
+        }
+    }
+    return counterBFS;
 }
