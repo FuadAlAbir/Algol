@@ -22,6 +22,9 @@ Reason: Using the data structure, queue in BFS
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <stack>
+#include<bits/stdc++.h> 
+
 
 using namespace std;
 
@@ -30,11 +33,14 @@ using namespace std;
 ---------------------------------------------------
 Function:   void addEdge(vector <int> adjList[], int u, int v);
 Reason:     adding the edges to adjacency list
-Function:   void bfs(vector <int> adjList[], int s, int node, int visited[]);
+Function:   void bfs(vector <int> adjList[], int s, int node);
 Reason:     for Beadth First Search
+Function:   void dfs(vector <int> adjList[], int start, int node);
+Reason:     for Depth First Search
 */
 void addEdge(vector <int> adjList[], int u, int v);
-void bfs(vector <int> adjList[], int s, int node, int visited[]);
+void bfs(vector <int> adjList[], int s, int node);
+void dfs(vector <int> adjList[], int start, int node);
 
 int main()
 {
@@ -52,7 +58,6 @@ int main()
     int graph[edge][2];             // graph Matrix with #egde rows and two columns
     int adjMat[node][node];         // adjMat Matrix with #node rows and #node columns
     vector <int> adjList[node];
-    int visited[node];
 
     // Initializing all the rows and cols of graph Matrix to 0
     for(int i = 0; i < edge; i++)
@@ -144,9 +149,10 @@ int main()
         }
         cout << endl;
     }
-    cout << "\nBFS starts from: ";
+    cout << "\nGraph Traversal starting Node: ";
     cin >> start;
-    bfs(adjList, start, node, visited);
+    bfs(adjList, start, node);
+    dfs(adjList, start, node);
     return 0;
 }
 
@@ -163,8 +169,9 @@ void addEdge(vector <int> adjList[], int u, int v)
 /*---------------------------------------------
     B R E A D T H   F I R S T   S E A R C H
 ---------------------------------------------*/
-void bfs(vector <int> adjList[], int start, int node, int visited[])
+void bfs(vector <int> adjList[], int start, int node)
 {
+    int visited[node];
     for(int i = 0; i < node; i++)
     {
         visited[i] = 0;
@@ -188,6 +195,47 @@ void bfs(vector <int> adjList[], int start, int node, int visited[])
                 int v = adjList[u][i];
                 visited[v] = 1;
                 Q.push(v);
+            }
+        }
+    }
+    cout << endl;
+}
+
+/*-------------------------------------------
+    D E A P T H   F I R S T   S E A R C H
+-------------------------------------------*/
+void dfs(vector <int> adjList[], int start, int node)
+{
+    int visited[node];
+    int edgeID[node];
+    for(int i = 0; i < node; i++)
+    {
+        visited[i] = 0;
+        edgeID[i] = 0;
+    }
+    cout << "Depth First Search: ";
+    stack <int> s;
+    s.push(start);
+    while(!s.empty())
+    {
+        int u = s.top();
+        if(visited[u] == 0)
+        {
+        cout << u << " ";
+        }
+
+        visited[u] = 1;
+        s.pop();
+        
+        while(edgeID[u] < adjList[u].size())
+        {
+            int v = adjList[u][edgeID[u]];
+            edgeID[u]++;
+            if(visited[v] == 0)
+            {
+                s.push(u);
+                s.push(v);
+                break;
             }
         }
     }
