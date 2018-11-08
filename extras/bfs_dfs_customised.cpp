@@ -23,6 +23,7 @@ Reason: Using the data structure, queue in BFS
 #include <vector>
 #include <queue>
 #include <stack>
+#include <algorithm> // remove
 
 using namespace std;
 
@@ -31,15 +32,16 @@ using namespace std;
 ---------------------------------------------------
 Function:   void addEdge(vector <int> adjList[], int u, int v);
 Reason:     adding the edges to adjacency list
-Function:   int bfs(vector <int> adjList[], int start, int node);
+Function:   vector <int> bfs(vector <int> adjList[], int start, int node);
 Reason:     for Beadth First Search
-Function:   void dfs(vector <int> adjList[], int start, int node);
+Function:   vector <int> dfs(vector <int> adjList[], int start, int node);
 Reason:     for Depth First Search
 */
 void addEdge(vector <int> adjList[], int u, int v);
 vector <int> bfs(vector <int> adjList[], int start, int node);
-void dfs(vector <int> adjList[], int start, int node);
-int component(vector <int> adjList[], int node);
+vector <int> dfs(vector <int> adjList[], int start, int node);
+int traverse_all(vector <int> adjList[], int node);
+int component(vector <int> adjList[], int start, int node);
 
 int main()
 {
@@ -128,6 +130,7 @@ int main()
     }
 
     // printing Adjacency Matrix
+    /*
     cout << "\nAdjacency Matrix:" << endl;
     for(int i = 0; i < node; i++)
     {
@@ -148,11 +151,13 @@ int main()
         }
         cout << endl;
     }
+    */
     cout << "\nGraph Traversal starting Node: ";
     cin >> start;
-    bfs(adjList, start, node);
-    dfs(adjList, start, node);
-    component(adjList, node);
+    //bfs(adjList, start, node);
+    //dfs(adjList, start, node);
+    //traverse_all(adjList, node);
+    cout << "\n" << component(adjList, start, node) << endl;
     return 0;
 }
 
@@ -204,14 +209,16 @@ vector <int> bfs(vector <int> adjList[], int start, int node)
     }
     cout << endl;
     returnVector.push_back(counter);
-    return returnVector;
+    return returnVector;                            // returns vector: <traversed nodes> <# of node traversed>
 }
 
 /*-------------------------------------------
     D E A P T H   F I R S T   S E A R C H
 -------------------------------------------*/
-void dfs(vector <int> adjList[], int start, int node)
+vector <int> dfs(vector <int> adjList[], int start, int node)
 {
+    vector <int> returnVector;
+    int counter = 0;
     int visited[node];
     int edgeID[node];
     for(int i = 0; i < node; i++)
@@ -228,10 +235,12 @@ void dfs(vector <int> adjList[], int start, int node)
         int u = s.top();
         if(visited[u] == 0)
         {
+            returnVector.push_back(u);
             cout << u << " ";
         }
 
         visited[u] = 1;
+        counter++;
         s.pop();
         
         while(edgeID[u] < adjList[u].size())
@@ -247,24 +256,53 @@ void dfs(vector <int> adjList[], int start, int node)
         }
     }
     cout << endl;
+    returnVector.push_back(counter);
+    return returnVector;                // returns vector: <traversed nodes> <# of node traversed>
 }
 
-int component(vector <int> adjList[], int node)
+int traverse_all(vector <int> adjList[], int node)
 {
     vector <int> componentVec[node];
     for(int i = 0; i < node; i++)
     {
         componentVec[i] = bfs(adjList, i, node);
-        for(int j = 0; j < componentVec[i].size(); j++)
+        cout << "Node Traversed: " << componentVec[i][componentVec[i].size() - 1] << endl;
+
+        componentVec[i] = dfs(adjList, i, node);
+        cout << "Node Traversed: " << componentVec[i][componentVec[i].size() - 1] << endl;
+
+    }
+}
+
+int component(vector <int> adjList[], int start, int node)
+{
+    vector <int> visited;
+    vector <int> temp;
+    int counterNode = 0;
+    int counterBFS = 0;
+
+    for(int j = 0; j < node; j++)
+    {
+        visited.push_back(0);
+    }
+    while(counterNode < node)
+    {
+        counterBFS++;
+        temp = bfs(adjList, start, node);
+        for(int j = 0; j < temp.size() - 1; j++)
         {
-            if(j == componentVec[i].size() - 1) 
-            {
-                cout << "\nNode Traversed: " << componentVec[i][j] << endl;   // componentVec[i][componentVec[i].size() - 1] contains counter from bfs
-            }
-            else
-            {
-                cout << componentVec[i][j] << " ";
+            counterNode++;
+            visited[temp[j]] = 1;
+        }
+
+        for(int j = 0; j < visited.size(); j++)
+        {
+            if(visited[j] == 0)
+            {   
+                start = j;
+                break;
             }
         }
     }
+    return counterBFS;
 }
