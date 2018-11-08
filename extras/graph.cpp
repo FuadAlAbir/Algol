@@ -42,6 +42,7 @@ int main()
     int edge;                      // # of egdes of the graph
     int row;                       // variable row used in setting up adjoint matrix
     int col;                       // variable col used in setting up adjoint matrix
+    int start;                     // variable start is the starting node of BFS
 
     cout << "# of node(s): ";
     cin >> node;
@@ -140,10 +141,12 @@ int main()
         for (int j = 0; j < adjList[i].size(); j++)
         {
            cout << " -> " << adjList[i][j];
-        } 
+        }
         cout << endl;
     }
-    bfs(adjList, 0, node, visited);
+    cout << "\nBFS starts from: ";
+    cin >> start;
+    bfs(adjList, start, node, visited);
     return 0;
 }
 
