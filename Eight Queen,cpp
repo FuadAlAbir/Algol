@@ -1,0 +1,201 @@
+/*
+Author: Fuad Al Abir
+Date: January 19, 2019
+Problem Source: https://open.kattis.com/problems/8queens
+Algorithm: Bruteforce
+Verdict: TLE
+*/
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+/* SAMPLE INPUT
+*.......
+......*.
+....*...
+.......*
+.*......
+...*....
+.....*..
+..*.....
+
+OUTPUT: valid
+
+*.......
+..*.....
+....*...
+......*.
+.*......
+.......*
+.....*..
+...*....
+
+OUTPUT: invalid;
+*/
+using namespace std;
+
+vector <int> queen_booking;
+vector <int> check_queens;
+
+void upper_left(int i, int j)
+{
+    while(i != 1 && j != 1)
+    {
+        i--;
+        j--;
+        queen_booking.push_back(i*10+j);
+    }
+}
+
+void upper_right(int i, int j)
+{
+    while(i != 1 && j != 8)
+    {
+        i--;
+        j++;
+        queen_booking.push_back(i*10+j);
+    }
+}
+
+void lower_left(int i, int j)
+{
+    while(i != 8 && j != 1)
+    {
+        i++;
+        j--;
+        queen_booking.push_back(i*10+j);
+    }
+}
+
+void lower_right(int i, int j)
+{
+    while(i != 8 && j != 8)
+    {
+        i++;
+        j++;
+        queen_booking.push_back(i*10+j);
+    }
+}
+
+void up(int i, int j)
+{
+    while(i != 1)
+    {
+        i--;
+        queen_booking.push_back(i*10+j);
+    }
+}
+
+void down(int i, int j)
+{
+    while(i != 8)
+    {
+        i++;
+        queen_booking.push_back(i*10+j);
+    }
+}
+
+void left(int i, int j)
+{
+    while(j != 1)
+    {
+        j--;
+        queen_booking.push_back(i*10+j);
+    }
+}
+
+void right(int i, int j)
+{
+    while(j != 8)
+    {
+        j++;
+        queen_booking.push_back(i*10+j);
+    }
+}
+
+
+int main()
+{
+	char inp_CB[8][8];
+	int pro_CB_row[8];
+	int pro_CB_col[8];
+	int queen[8];
+    int k = 0;
+    int flag = 0;
+    
+	for(int i = 0; i < 8; i++)
+	{
+	    for(int j = 0; j < 8; j++)
+	    {
+	        cin >> inp_CB[i][j];
+	        if(inp_CB[i][j] == '*')
+	        {
+	            pro_CB_row[k] = i + 1;
+	            pro_CB_col[k] = j + 1;
+	            queen[k] = pro_CB_row[k]*10 + pro_CB_col[k];
+	            k++;
+	        }
+	    }
+	}
+	
+	for(int i = 0; i < 8; i++)
+	{
+	    queen_booking.clear();
+	    
+	    upper_left(pro_CB_row[i], pro_CB_col[i]);
+	    upper_right(pro_CB_row[i], pro_CB_col[i]);
+	    lower_left(pro_CB_row[i], pro_CB_col[i]);
+	    lower_right(pro_CB_row[i], pro_CB_col[i]);
+	    
+	    up(pro_CB_row[i], pro_CB_col[i]);
+	    down(pro_CB_row[i], pro_CB_col[i]);
+	    left(pro_CB_row[i], pro_CB_col[i]);
+	    right(pro_CB_row[i], pro_CB_col[i]);
+	    
+	    check_queens.clear();
+	    
+	    for(int j = 0; j < 8; j++)
+	    {
+	        if(pro_CB_row[i]*10 + pro_CB_col[i] != queen[j])
+    	    {
+    	        check_queens.push_back(queen[j]);
+    	    }
+	    }
+	    
+	    /*
+        if(i < 7)
+        {
+            cout <<  check_queens[i];
+        	for(int j = 0; j < queen_booking.size(); j++)
+            {
+                cout << " " << queen_booking[j];
+                if(check_queens[i] == queen_booking[j])
+                {
+                    flag = 1;
+                    cout << "invalid" << endl;
+                    return 0;
+                }
+            }
+            cout << endl;
+        }
+        */
+	    
+	    for(int j = 0; j < check_queens.size(); j++)
+	    {
+	        for(int k = 0; k < queen_booking.size(); k++)
+	        {
+	            if(check_queens[j] == queen_booking[k])
+	            {
+	                cout << "invalid" << endl;
+	                flag = 1;
+	                return 0;
+	            }
+	        }
+	    }
+	    
+	}
+	
+	if(flag == 0) cout << "valid" << endl;
+	
+}
