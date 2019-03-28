@@ -50,6 +50,20 @@ int main()
                 A[i][j] = min( A[i][j], A[i][k - 1] + A[k - 1][j] );
             }
         }
+        
+        // PRINTING EACH MATRIX for K = 1 to K = node
+        /*
+        cout << "K = " << k << endl;
+        for(int i = 0; i < node; i++)
+        {
+            for(int j = 0; j < node; j++)
+            {
+                cout << A[i][j] << " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+        */
     }
     
     // PRINT RESULT
