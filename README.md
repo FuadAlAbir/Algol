@@ -1,7 +1,5 @@
-# Algol: CSE 2201 & CSE 2202
-
-This is a compilation of problems solved in lab and for the assignments associated with the course CSE 2201: Computer Algorithms and CSE 2202: Sessional based on CSE 2201.
-
-Course Instructor: Biprodip Pal<br/>
-Duration: 2nd year Even Semester<br/>
-Institute: Dept. of CSE, Rajshahi University of Engineering & Technology
+<pre><b>CSE-2202-Computer-Algorithms-Lab</b>
+Sessional Based on CSE 2201<br/>
+<b>Semester:</b> 2nd year Even Semester
+<b>Duration:</b> November 2018 to February 2019
+<b>Instructor:</b> Biprodip Pal, Assistant Professor, Dept. of CSE, RUET</font></pre>
